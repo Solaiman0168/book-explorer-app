@@ -33,9 +33,10 @@
         </div>
     </main>
 
-    <script src="js/storage.js"></script>
-    <script src="js/books.js"></script>
-    <script>
+    <script type="module" src="js/storage.js"></script>
+    <script type="module" src="js/books.js"></script>
+    <script type="module">
+        import BookService from '../js/books.js';
         document.addEventListener('DOMContentLoaded', async () => {
             await BookService.fetchBooks();
             renderWishlist();

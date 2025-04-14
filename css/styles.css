@@ -24,3 +24,8 @@
 .fade-in {
     animation: fadeIn 0.5s ease-in;
 }
+
+.book-card:hover {
+    box-shadow: 6px 6px 13px 0px #FFFFFF, -6px -6px 13px 0px #CCD7E0;
+    background: linear-gradient(90deg, #FFFFFF 19%, #E3E9EC 100%);
+}

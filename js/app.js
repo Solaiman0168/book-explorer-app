@@ -38,7 +38,7 @@ function renderBooks() {
 
 function createBookCard(book) {
     const card = document.createElement('div');
-    card.className = 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300';
+    card.className = 'bg-white book-card rounded-lg shadow-md overflow-hidden transition-all';
     
     const isWishlisted = BookService.isInWishlist(book.id);
     
@@ -46,7 +46,7 @@ function createBookCard(book) {
         <a href="book.html?id=${book.id}">
             <img src="${book.formats['image/jpeg'] || 'https://via.placeholder.com/300x450?text=No+Cover'}" 
                  alt="${book.title}" 
-                 class="w-full h-64 object-cover">
+                 class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
         </a>
         <div class="p-4">
             <div class="flex justify-between items-start">

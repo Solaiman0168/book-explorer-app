@@ -4,27 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Wishlist</title>
+    <script type="module">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        black: {
+                            900: '#171717', 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-800">
     <!-- Navbar -->
-    <nav class="bg-blue-600 text-white p-4 shadow-md">
+    <nav class="bg-blue-600 dark:bg-gray-900 dark:text-gray-200 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold">Book Explorer</a>
-            <div class="flex space-x-4">
+            <div class="flex items-center space-x-4">
                 <a href="index.html" class="hover:underline">Home</a>
                 <a href="wishlist.html" class="hover:underline">Wishlist</a>
+                <button id="themeToggle" class="p-2 rounded-full focus:outline-none">
+                    <i id="themeIcon" class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-6">My Wishlist</h1>
+        <h1 class="text-3xl font-bold mb-6 dark:text-gray-200 text-black-900">My Wishlist</h1>
         
-        <div id="wishlistContainer">
+        <div id="wishlistContainer" class="bg-white dark:bg-gray-800 rounded-lg p-6 dark:text-gray-200">
             <!-- Wishlisted books will be loaded here -->
             <div class="text-center py-8">
                 <div class="animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
@@ -35,6 +56,7 @@
 
     <script type="module" src="js/storage.js"></script>
     <script type="module" src="js/books.js"></script>
+    <script type="module" src="js/theme.js"></script>
     <script type="module">
         import BookService from '../js/books.js';
         document.addEventListener('DOMContentLoaded', async () => {
@@ -63,7 +85,7 @@
             wishlistContainer.innerHTML = `
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     ${wishlistedBooks.map(book => `
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <div class="bg-white rounded-lg book-card shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
                             <a href="book.html?id=${book.id}">
                                 <img src="${book.formats['image/jpeg'] || 'https://via.placeholder.com/300x450?text=No+Cover'}" 
                                      alt="${book.title}" 
@@ -72,7 +94,7 @@
                             <div class="p-4">
                                 <div class="flex justify-between items-start">
                                     <a href="book.html?id=${book.id}" class="hover:underline">
-                                        <h3 class="font-bold text-lg mb-2 line-clamp-2">${book.title}</h3>
+                                        <h3 class="font-bold text-lg mb-2 line-clamp-2 text-gray-600">${book.title}</h3>
                                     </a>
                                     <button class="wishlist-btn p-2 rounded-full text-red-500 hover:text-red-700" 
                                             data-id="${book.id}">

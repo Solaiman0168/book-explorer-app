@@ -4,25 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Details</title>
+    <script type="module">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        black: {
+                            900: '#171717', 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900">
     <!-- Navbar -->
-    <nav class="bg-blue-600 text-white p-4 shadow-md">
+    <nav class="bg-blue-600 dark:bg-gray-800 dark:text-gray-200 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold">Book Explorer</a>
-            <div class="flex space-x-4">
+            <div class="flex items-center space-x-4">
                 <a href="index.html" class="hover:underline">Home</a>
                 <a href="wishlist.html" class="hover:underline">Wishlist</a>
+                <button id="themeToggle" class="p-2 rounded-full focus:outline-none">
+                    <i id="themeIcon" class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="container mx-auto p-4">
-        <div id="bookDetails" class="bg-white rounded-lg shadow-md p-6">
+        <div id="bookDetails" class="dark:bg-gray-800 rounded-lg shadow-md p-6 dark:text-gray-200">
             <!-- Book details will be loaded here -->
             <div class="text-center py-8">
                 <div class="animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
@@ -33,6 +54,7 @@
 
     <script type="module" src="js/storage.js"></script>
     <script type="module" src="js/books.js"></script>
+    <script type="module" src="js/theme.js"></script>
     <script type="module">
         import BookService from '../js/books.js';
         document.addEventListener('DOMContentLoaded', async () => {
@@ -68,15 +90,15 @@
                     </div>
                     <div class="md:w-2/3">
                         <div class="flex justify-between items-start">
-                            <h1 class="text-3xl font-bold mb-2">${book.title}</h1>
+                            <h1 class="text-3xl font-bold mb-2 dark:text-gray-200 text-black-900">${book.title}</h1>
                             <button id="wishlistBtn" class="p-2 rounded-full ${isWishlisted ? 'text-red-500' : 'text-gray-400'} hover:text-red-500">
                                 <i class="fas fa-heart text-2xl"></i>
                             </button>
                         </div>
-                        <p class="text-xl text-gray-600 mb-4">by ${book.authors.map(a => a.name).join(', ')}</p>
+                        <p class="text-xl dark:text-gray-200 text-black-900 mb-4">by ${book.authors.map(a => a.name).join(', ')}</p>
                         
                         ${book.subjects ? `<div class="mb-6">
-                            <h2 class="text-lg font-semibold mb-2">Genres</h2>
+                            <h2 class="text-lg font-semibold mb-2 dark:text-gray-200 text-black-900">Genres</h2>
                             <div class="flex flex-wrap gap-2">
                                 ${book.subjects.map(subject => 
                                     `<span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">${subject}</span>`
@@ -85,17 +107,17 @@
                         </div>` : ''}
                         
                         ${book.summaries && book.summaries.length > 0 ? `<div class="mb-6">
-                            <h2 class="text-lg font-semibold mb-2">Summary</h2>
-                            <p class="text-gray-700">${book.summaries[0]}</p>
+                            <h2 class="text-lg font-semibold mb-2 dark:text-gray-200 text-black-900">Summary</h2>
+                            <p class="dark:text-gray-200 text-black-900">${book.summaries[0]}</p>
                         </div>` : ''}
                         
                         <div class="mb-6">
-                            <h2 class="text-lg font-semibold mb-2">Details</h2>
+                            <h2 class="text-lg font-semibold mb-2 dark:text-gray-200 text-black-900">Details</h2>
                             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                <li><span class="font-medium">ID:</span> ${book.id}</li>
-                                <li><span class="font-medium">Language:</span> ${book.languages.join(', ')}</li>
-                                <li><span class="font-medium">Copyright:</span> ${book.copyright ? 'Yes' : 'No'}</li>
-                                <li><span class="font-medium">Downloads:</span> ${book.download_count.toLocaleString()}</li>
+                                <li><span class="font-medium dark:text-gray-200 text-black-900">ID:</span> <span class="dark:text-gray-200 text-black-900">${book.id}</span></li></li>
+                                <li><span class="font-medium dark:text-gray-200 text-black-900">Language:</span> <span class="dark:text-gray-200 text-black-900">${book.languages.join(', ')}</span></li>
+                                <li><span class="font-medium dark:text-gray-200 text-black-900">Copyright:</span> <span class="dark:text-gray-200 text-black-900"> ${book.copyright ? 'Yes' : 'No'} </span></li>
+                                <li><span class="font-medium dark:text-gray-200 text-black-900">Downloads:</span> <span class="dark:text-gray-200 text-black-900"> ${book.download_count.toLocaleString()} </span></li>
                             </ul>
                         </div>
                         

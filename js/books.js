@@ -29,15 +29,38 @@ const BookService = {
         }
     },
     
-    // Filter books by search term and genre
+
     filterBooks: function(searchTerm = '', genre = '') {
         this.filteredBooks = this.allBooks.filter(book => {
-            const matchesSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesGenre = !genre || (book.subjects && book.subjects.some(s => s.includes(genre)));
+            const matchesSearch = searchTerm ? 
+                book.title.toLowerCase().includes(searchTerm.toLowerCase()) : true;
+                
+            const matchesGenre = genre ? 
+                (book.subjects && book.subjects.some(s => s.includes(genre))) : true;
+                
             return matchesSearch && matchesGenre;
         });
-        this.currentPage = 1; // Reset to first page when filtering
+        
+        // Reset to first page when filtering
+        this.currentPage = 1;
+        
         return this.getPaginatedBooks();
+    },
+
+
+    init: async function() {
+        await this.fetchBooks();
+        
+        // Load saved preferences
+        const prefs = StorageService.getSearchPreferences();
+        this.currentPage = prefs.page;
+        
+        // Apply saved filters
+        if (prefs.searchTerm || prefs.genre) {
+            this.filterBooks(prefs.searchTerm, prefs.genre);
+        }
+        
+        return this.allBooks;
     },
     
     // Get paginated books
